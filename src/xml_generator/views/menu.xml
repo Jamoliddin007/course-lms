@@ -1,0 +1,9 @@
+<odoo>
+    <menuitem id="menu_xml_root" name="XML Generator"/>
+    <menuitem id="menu_xml_generate" name="Generate XML" parent="menu_xml_root" action="action_xml_generate"/>
+    <record id="action_xml_generate" model="ir.actions.act_window">
+        <field name="name">XML Generator</field>
+        <field name="res_model">xml.generate</field>
+        <field name="view_mode">form</field>
+    </record>
+</odoo>

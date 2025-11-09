@@ -1,0 +1,20 @@
+<odoo>
+    <record id="view_xml_generate_form" model="ir.ui.view">
+        <field name="name">xml.generate.form</field>
+        <field name="model">xml.generate</field>
+        <field name="arch" type="xml">
+            <form string="XML Generator">
+                <sheet>
+                    <group>
+                        <field name="module_path"/>
+                        <field name="model_ids" widget="many2many_tags"/>
+                    </group>
+                    <footer>
+                        <button string="Generate XML" type="object" name="generate" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

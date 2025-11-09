@@ -23,14 +23,12 @@ Long description of module's purpose
     # always loaded
     'data': [
         'security/ir.model.access.csv',
-        'views/views.xml',
-        'views/templates.xml',
-
-        "wizard/xml_generate.xml"
+        "views/xml_generate_views.xml",
+        "views/menu.xml",
     ],
     # only loaded in demonstration mode
     'demo': [
-        'demo/demo.xml',
+        'demo/view_template.mako',
     ],
 }
 

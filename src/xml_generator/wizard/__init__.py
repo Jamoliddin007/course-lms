@@ -1,1 +1,1 @@
-from . import xml_generate
+from . import xml_generate_wizard
