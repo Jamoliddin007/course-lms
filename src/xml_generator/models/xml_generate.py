@@ -1,4 +1,4 @@
-from odoo import models, fields, api
+from odoo import models, fields
 from mako.template import Template
 import os
 
@@ -13,19 +13,22 @@ class XMLGenerate(models.TransientModel):
     def generate(self):
         self.ensure_one()
 
+        system_fields = {
+            "id", "create_uid", "create_date", "write_uid", "write_date",
+            "__last_update", "display_name"
+        }
+
         for model in self.model_ids:
-            # model_name: "education.course"
             model_name = model.model
             model_short = model_name.replace(".", "_")
 
-            # Fields data
-            fields_data = [
-                {"name": f.name, "required": f.required}
-                for f in model.field_id
-                if f.store and not f.related
-            ]
+            fields_data = []
+            for f in model.field_id:
+                if (
+                    f.name not in system_fields and f.required
+                ):
+                    fields_data.append({"name": f.name, "required": f.required})
 
-            # Load mako template
             template_path = os.path.join(
                 os.path.dirname(__file__), "../templates/view_template.mako"
             )
@@ -38,12 +41,11 @@ class XMLGenerate(models.TransientModel):
                 fields=fields_data,
             )
 
-            # Output path: {module_path}/views/{model_short}_view.xml
             output_dir = os.path.join(self.module_path, "views")
             os.makedirs(output_dir, exist_ok=True)
 
-            output_file = os.path.join(output_dir, f"{model_short}_view.xml")
+            output_file = os.path.join(output_dir, f"{model_short}.xml")
             with open(output_file, "w", encoding="utf-8") as f:
                 f.write(xml_content)
 
-            print(f"XML generated: {output_file}")
+            print(f"XML generated for {model_name}: {output_file}")
